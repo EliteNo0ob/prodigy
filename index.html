@@ -1,0 +1,75 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispatch Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add this script tag to your HTML file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <section dispatch-inputs>
+    <div>
+        <label for="dispatchNumber">Enter Dispatch Number:</label>
+        <input type="text" id="dispatchNumber">
+        <input type="file" id="hiddenFileInput" style="display: none" accept=".csv" value="export.csv">
+         <button onclick="setDefaultFile()">Choose File</button>
+        <button onclick="searchDispatch()">Search</button>
+     </div>
+        <!-- Inside the statusSelection div -->
+        <div id="statusSelection" style="display: none;">
+          <label for="status">Select Status:</label>
+          <!-- Move the dropdown here -->
+          <select id="statusDropdown">
+          <!-- Add more status options as needed -->
+          <option value="Installs">Installs</option>
+          <option value="Follow Up">Follow Up</option>
+          <option value="Very Important">Very Important</option>
+          <option value="Needs Equipment">Needs Equipment</option>
+          <!-- Add more status options here -->
+          </select>
+          <!-- Update the button text -->
+          <button onclick="updateDispatch()">Update</button>
+        </div>
+        <p></p>
+        </section>
+    <div class="dispatches">
+    <p></p>
+    <div id="dispatchColumns" class="dispatch-columns"></div>
+    <div class="section-to-right">
+        <h2>Todo List</h2>
+        <input type="text" id="newTodo" placeholder="Add new task">
+        <button onclick="addTodo()">Add</button>
+        <ol id="todoList"></ol> <!-- Change this line to use <ol> -->
+            <div id="notesModal" class="modal">
+                
+            </div>
+    </div>
+    <div class="new-right-section">
+        <h2>Area Information</h2>
+        <p>PREP</p>
+        <p>ORDER PARTS</p>
+        <p>CUST APPRV</p>
+    </div>
+    <div>
+        <label for="locationSearch">Enter Location Name:</label>
+        <input type="text" id="locationSearch" placeholder="Location Name">
+        <div>
+            <label for="csvFileInput">Select a CSV File:</label>
+            <input type="file" id="csvFileInput" accept=".csv">
+            <button onclick="loadCsvData()">Load CSV Data</button>
+        </div>        
+        <button onclick="searchByLocation()">Search Dispatches</button>
+    </div>
+    <div id="searchResults" class="search-results">
+        <h3>Search Results:</h3>
+        <ul id="resultList"></ul>
+    </div>
+    
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
