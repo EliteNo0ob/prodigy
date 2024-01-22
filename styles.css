@@ -1,0 +1,242 @@
+body {
+    font-family: Arial, sans-serif;
+    display: grid;
+    padding: 20px;
+    background-color: whitesmoke ;
+}
+
+.dispatches {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* Adjust to 6 columns */
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.dispatch-columns {
+    grid-area: 1 / 1 / 2 / 4;
+}
+
+.section-to-right {
+    grid-area: 1 / 4 / 2 / 5; /* Adjust to occupy one column */
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: white;
+    text-align: center;
+}
+
+.new-right-section {
+    grid-area: 1 / 5 / 2 / 6; /* New section in the next column */
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    background-color: white;
+    text-align: center;
+}
+
+.new-right-section p {
+    font-weight: 400;
+    text-align: center;
+    line-height: 10px;
+}
+.dispatches-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10px;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    margin: 5px;
+    background-color: white;
+}
+
+.category-name {
+    text-align: center;
+    margin-right: 20px;
+}
+
+.dispatch-block {
+    cursor: pointer;
+    text-align: center;
+    min-width: 100px; /* Adjust the minimum width as needed */
+    max-width: 175px; /* Adjust the maximum width as needed */
+    margin: 2px;
+    padding: 5px;
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hides text that overflows the block */
+    text-overflow: ellipsis; /* Adds an ellipsis to text that overflows */
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.dispatch-block:hover {
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Inset shadow for sunk effect */
+    transform: translateY(2px); /* Optional: Slightly move down the block */
+}
+
+.dispatch-block h3 {
+    font-weight: bold; /* Add this line to make the h3 elements bold */
+    line-height: 1px;   /* within paragraph */
+}
+h2 {
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-shadow: 2px 2px 5px red;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
+p {
+    line-height: 1px;   /* within paragraph */
+    }
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    width: 620px;
+}
+
+.modal-content {
+    max-width: 600px;
+    margin: auto;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+dispatch-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 20px;
+}
+
+.notes-container {
+    max-height: 350px; /* Adjust as needed */
+    max-width: 600px; /* Set a maximum width for horizontal scrolling */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px; /* Add margin between paragraphs */
+}
+
+.notes-container p {
+    margin-bottom: 8px; /* Adjust as needed */
+    line-height: 1;
+}
+#todoList {
+    padding-left: 0; /* Adjust or remove padding */
+    margin-left: 0; /* Adjust or remove margin if needed */
+}
+
+#todoList li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Space between items */
+    border-bottom: 1px solid black;
+}
+
+#todoList li button {
+    margin-left: auto; /* Space between the task text and the button */
+}
+#todoList li:last-child {
+    border: 0;
+  }
+#todoList li:hover {
+    background-color: whitesmoke;
+  }
+#newTodo {
+    margin: 5px 5px;
+}
+ol {
+    margin: 0px;
+    padding-inline-start: 0;
+}
+
+/* Style for existing notes textarea */
+.existing-notes {
+    height: 350px; /* Adjust height as needed for existing notes */
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    /* Add any other styling as needed */
+}
+
+/* Style for new notes textarea */
+.new-notes {
+    height: 50px; /* Adjust height as needed for new notes */
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Add any other styling as needed */
+}
+
+/* Style for the textarea to add new notes */
+#newNote {
+    height: 40px; /* Adjust as needed */
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    /* Add any other styling as needed */
+}
+
+.search-results {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.search-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.search-results li {
+    margin-bottom: 5px;
+}
+
+.category-container {
+    
+    /* Add styles for the category container */
+}
+
+.category-container h2 {
+   text-align: center;
+   margin: 3px;
+    /* Styles for the category title */
+}
+
+.stylish-button {
+    background-color: red; /* Red background color */
+    color: white; /* White text color */
+    border: none; /* Remove button border */
+    padding: 1px 1px; /* Add some padding */
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.stylish-button:hover {
+    background-color: darkred; /* Darker blue on hover */
+}
