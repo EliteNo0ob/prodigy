@@ -162,6 +162,7 @@ function displayDispatchDetails(dispatchNumber) {
                     <textarea readonly class="new-notes">${newNotes}</textarea>
                     <textarea id="newNote" placeholder="Enter new note here..."></textarea>
                     <button onclick="addNewNote('${dispatch.Dispatch}')">Add Note</button>
+                    <button onclick="removeDispatch('${dispatch.Dispatch}')">Remove Dispatch</button>
                 </div>
 
             </div>`;
@@ -281,52 +282,68 @@ function saveNotes(dispatchNumber) {
 // To Do List
 let todos = [];
 
+// Load existing to-do items from localStorage on page load
+document.addEventListener("DOMContentLoaded", function () {
+    todos = JSON.parse(localStorage.getItem('todos')) || [];
+    updateTodoList();
+});
+
+// Function to add a new to-do item
 function addTodo() {
     const newTodoText = document.getElementById('newTodo').value;
     if (newTodoText) {
-        todos.push(newTodoText);
+        todos.push({ text: newTodoText, completed: false }); // Added an object to track completion status
         document.getElementById('newTodo').value = '';
         updateTodoList();
-        saveTodosToLocalStorage(); // Save updated list to localStorage
     }
 }
 
+// Function to update the display of the to-do list
 function updateTodoList() {
     const todoListElement = document.getElementById('todoList');
     todoListElement.innerHTML = ''; // Clear existing list
-    
-    // Create an ordered list manually
-    const orderedList = document.createElement('ol');
-    
+
     todos.forEach((todo, index) => {
         const listItem = document.createElement('li');
-        listItem.textContent = todo;
-        listItem.appendChild(createRemoveButton(index));
-        orderedList.appendChild(listItem);
+
+        const textNode = document.createTextNode(todo.text);
+        listItem.appendChild(textNode);
+
+        const removeButton = createRemoveButton(index);
+        listItem.appendChild(removeButton);
+
+        todoListElement.appendChild(listItem);
     });
 
-    todoListElement.appendChild(orderedList);
+    saveTodosToLocalStorage(); // Save the to-do list to localStorage
 }
 
+// Function to toggle the completion status of a to-do item
+function toggleTodoCompletion(index) {
+    todos[index].completed = !todos[index].completed;
+    updateTodoList();
+}
+
+// Function to create a remove button for each to-do item
 function createRemoveButton(index) {
     const removeButton = document.createElement('button');
-    removeButton.textContent = 'X';
-    removeButton.classList.add('stylish-button'); // Add a class for styling
-    removeButton.onclick = function() {
-        removeTodo(index);
-    };
+    removeButton.textContent = 'Remove';
+    removeButton.onclick = () => removeTodo(index);
     return removeButton;
 }
 
+// Function to remove a to-do item
 function removeTodo(index) {
     todos.splice(index, 1);
     updateTodoList();
-    saveTodosToLocalStorage(); // Save updated list to localStorage
 }
 
+// Function to save the to-do list to localStorage
 function saveTodosToLocalStorage() {
     localStorage.setItem('todos', JSON.stringify(todos));
 }
+
+// Existing JavaScript code for other functionalities...
 
 document.addEventListener("DOMContentLoaded", function () {
     // Load existing dispatched items
@@ -363,71 +380,7 @@ function addNewNote(dispatchNumber) {
     // Optionally close the modal or refresh the notes display
 }
 
-function showOtherDispatches(locationName) {
-    const matchingDispatches = dispatchDatabase.filter(dispatch => dispatch['Location Name'] === locationName);
-
-    // Open a new window and display the matching dispatches
-    const newWindow = window.open("", "_blank");
-    const htmlContent = matchingDispatches.map(dispatch => 
-        `<p>Dispatch Number: ${dispatch.Dispatch}, Location Name: ${dispatch['Location Name']}</p>`
-    ).join('');
-    
-    newWindow.document.write(htmlContent);
-}
 
 
-function searchByLocation() {
-    const searchNumber = document.getElementById('locationSearch').value;
-    const uniqueDispatchNumbers = new Set();
-    const resultsContainer = document.getElementById('resultList');
-
-    resultsContainer.innerHTML = ''; // Clear previous results
-
-    dispatchDatabase.forEach(dispatch => {
-        if (dispatch['Location Name'].includes(searchNumber) && !uniqueDispatchNumbers.has(dispatch.Dispatch)) {
-            uniqueDispatchNumbers.add(dispatch.Dispatch);
-
-            // Create and append a dispatch block for each unique result
-            const dispatchBlock = createSearchResultBlock(dispatch);
-            resultsContainer.appendChild(dispatchBlock);
-        }
-    });
-}
-
-// Helper function to create a search result block
-function createSearchResultBlock(dispatch) {
-    const dispatchBlock = document.createElement("div");
-    dispatchBlock.className = "dispatch-block";
-    dispatchBlock.innerHTML = `
-        <h3>${dispatch.Dispatch}</h3>
-        <p>${dispatch['Location Name']}</p>
-        <p>${dispatch.City}</p>
-        <p>Status: ${dispatch.Status}</p>`;
-
-     // Attach click event listener
-     dispatchBlock.addEventListener("click", () => displayDispatchDetails(dispatch.Dispatch));
-     return dispatchBlock;
-}
-
-
-
-
-function loadCsvData() {
-    const fileInput = document.getElementById('csvFileInput');
-    const file = fileInput.files[0];
-
-    if (!file) {
-        alert('Please select a CSV file.');
-        return;
-    }
-
-    Papa.parse(file, {
-        complete: function (result) {
-            dispatchDatabase = result.data;
-            alert('CSV data loaded successfully!');
-        },
-        header: true
-    });
-}
 
 const allCategories = ["Installs", "Follow Up", "Very Important", "Needs Equipment"];
