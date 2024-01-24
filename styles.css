@@ -168,6 +168,7 @@ p {
 #todoList {
     padding-left: 0; /* Adjust or remove padding */
     margin-left: 0; /* Adjust or remove margin if needed */
+    width: 250px;
 }
 
 #todoList li {
